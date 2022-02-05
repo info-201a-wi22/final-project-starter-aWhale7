@@ -34,7 +34,7 @@ Our group’s project focuses on the change in number of persons who utilize SNA
 </p>
 
 **Human Values**: Values associated and connected with our topic is maintaining the well-being of our community and the right to having access to food, making sure no one is deprived of that necessity, and raising awareness on the issues of hunger. These values originate from social and economical issues that have arised especially in the 21st century regarding the financial crises and Covid-19 pandemic, with over 10.5% of households having experienced food insecurity in the United States alone in 2019 ([Silva, 2020](https://www.npr.org/2020/09/27/912486921/food-insecurity-in-the-u-s-by-the-numbers. )). The issue of healthy foods in itself being expensive for an individual to sustain conflicts with the idea of providing food for everyone, which results in food insecurity ([Food and Agriculture Organization of the United Nations, 2021](https://www.fao.org/state-of-food-security-nutrition
-).
+)).
 
 **Stakeholders**: The direct stakeholders of our topic involves not only the citizens and residents of New York, but also other residents in different states that are experiencing food insecurity and are in need of SNAP benefits and other community based organizations, such as food banks and retail shops that provide food items for those who need it. The motivations and values the stakeholders contain is dealing and solving issues of hunger for everyone, and maintaining the well-being of the communities. Indirect stakeholders include politicians who cater to the people they are serving in order to maintain their status within the government through elections and provide assistance for struggling individuals.
 
