@@ -19,17 +19,20 @@ year_highest <- nyc_data %>%
   filter(totals_year == max(totals_year)) %>% 
   pull(Year)
 
+value_highest <- nyc_data %>% 
+  group_by(Year) %>% 
+  summarise(totals_year = sum(Total.SNAP.Households)) %>% 
+  filter(totals_year == max(totals_year)) %>% 
+  pull(totals_year)
+
 temp_2013 <- nyc_data %>% 
   group_by(Year) %>% 
-  summarise(totals_temp = sum(Temporary.Assistance.SNAP.Households) %>% 
+  summarise(totals_temp = sum(Temporary.Assistance.SNAP.Households)) %>% 
   filter(Year == "2013") %>% 
   pull(totals_temp)
 
   
-prop_temp_2013 <- nyc_data %>% 
-  group_by(Year) %>% 
-  summarise(totals_year = sum(Total.SNAP.Households)) %>% 
-  filter(totals_year == max(totals_year)) %>% 
+prop_temp_2013 <- temp_2013 / value_highest
   
             
               
