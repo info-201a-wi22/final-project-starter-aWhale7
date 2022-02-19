@@ -1,54 +1,127 @@
 ---
-title: "Your Project Title"
-author: "project team members"
-date: "1/22/2022"
+title: "Analyzing Government Food Support in New York"
+author: ""
 output: html_document
 ---
 
+## **Project Report**
+### Authors:
+| Name | Email
+| -----|------
+| Paul Kim | pkim3@uw.edu
+| Mason Howes | mhowes@uw.edu
+| Viru Repalle | virurep@uw.edu
+|Matthew Pedraja|mpedraj@uw.edu
+
+### **Date**: February 16th 2022
+
+### **Code name**: *Yummy*
+
+### **Affiliation**:
+**INFO-201: Technical Foundations of Informatics - The Information School - University of Washington**
+
 ```{r setup, include=FALSE}
 knitr::opts_chunk$set(echo = TRUE)
+library("ggplot2")
+library("knitr")
+source("../source/bar_plot.R")
+source("../source/AreaChart.R")
+source("../source/line_chart.R")
+source("../source/aggregation.R")
+source("../source/summary_stats.R")
 ```
 
-## What is this file for?
+<p align="center">
+  <img src="https://static01.nyt.com/images/2010/01/22/arts/22stamps1a/popup.jpg?quality=75&auto=webp&disable=upscale">
+</p>
 
-* This file will eventually become your project report for **P02: Exploratory Data Analysis**. Specifically, you will write rmarkdown to report your exploratory data analysis.
+### **Abstract**:
+We are concerned with changes to SNAP assistance given to individuals and families in need. This is a topic of concern because analyzing how the SNAP program has changed based on various relevant factors can help policy makers make more informed decisions on an important part of United States welfare to low-income parties. We plan to do this by analyzing a data set which has the amount of SNAP assistance given to families over time within the State of New York.
 
-* Please see Canvas for more details.
+### **Keywords**:
+_food insecurity, low income meals, SNAP access, government food support_
 
-## ACCESSING THE /source DIRECTORY
-### Example 1: Source some code and run a function
-```{r}
-# Example 1: Note relative path, which can be read: Up one
-# directory(..), down into source (/source), and 
-# then "source" an R file (data_access.R)
-source("../source/data_access.R")
-data_access_test()
+### **Introduction**:
+Our group\'s project focuses on the change in number of persons who utilize SNAP within the different districts of the State of New York over the past 5 years to confirm whether or not the necessary parties are receiving the help that they need. We all believe that no one should have to worry about whether or not there will be food on the table each night, so SNAP, the Supplemental Nutrition Assistance Program, is something that each of us is passionate about for its success and ease of access. With this project, we hope to gain a better understanding of its impact on people\'s lives as well as to see whether or not the U.S. government is holding up their end on allowing residents of a selected State, being New York in this case, to have affordable food to feed their families. Finally, we aim for this information to be used by policymakers in order for them to make more informed decisions regarding food security in the United States. 
+
+### **Design Situation**:
+
+**Framing the Topic of Concern**: Our choice of topic for this project focuses on food security and the support that is provided within the districts of New York by the U.S government, from November 2015 to December 2021. Each district contains the amount of households from each specific month, as well as provides statistics on the amount of support that was given within that district, through the SNAP (Supplemental Nutrition Assistance Program). The key issues to our topic surround economical and financial problems, with the COVID-19 pandemic affecting everyone globally, as well as issues of job security affecting income making food harder to access.
+<p align="center">
+  <img src="https://www.scarymommy.com/wp-content/uploads/2017/05/hungry-child.jpg">
+</p>
+
+**Human Values**: Values associated and connected with our topic is maintaining the well-being of our community and the right to having access to food, making sure no one is deprived of that necessity, and raising awareness on the issues of hunger. These values originate from social and economical issues which have risen in the 21st century regarding the financial crises and COVID-19 pandemic, with over 10.5% of households having experienced food insecurity in the United States alone in 2019 ([Silva, 2020](https://www.npr.org/2020/09/27/912486921/food-insecurity-in-the-u-s-by-the-numbers. )). The issue of healthy foods in itself being expensive for an individual to sustain conflicts with the idea of providing food for everyone, which results in food insecurity ([Food and Agriculture Organization of the United Nations, 2021](https://www.fao.org/state-of-food-security-nutrition)).
+
+**Stakeholders**: The direct stakeholders of our topic involves not only the citizens and residents of New York, but also other residents in different states that are experiencing food insecurity and are in need of SNAP benefits and other community based organizations, such as food banks and retail shops that provide food items for those who need it. The motivations and values the stakeholders contain is dealing and solving issues of hunger for everyone, and maintaining the well-being of the communities. Indirect stakeholders include politicians who cater to the people they are serving in order to maintain their status within the government through elections and provide assistance for struggling individuals. Indirect stakeholder may also include communities which may be impacted by future SNAP policy changes which may occur from this report. 
+
+**Benefits and Harms**: The potential benefits by exploring our topic involve raising support in favor of making sure everyone is able to have food, greatly benefiting every individual in need of food as well as every citizen by reducing the stress of food insecurity ([Keith-Jennings, 2019](https://www.cbpp.org/blog/raising-snap-benefits-would-have-powerful-effects-on-food-security-poverty-health)). However, potential harms could involve using the data provided as a means to push a political agenda and attack the political party associated, leading to a huge divide among the populace discouraging cooperation against solving hunger issues.
+
+### **Research Questions**:
+1. Which month(s) historically have the most Total SNAP benefits allocated to them?
+2. How does the number of SNAP receiving households change throughout time? This can be categorized by NY as a whole or by individual districts as well
+3. How did COVID-19 affect the number of SNAP benefits being distributed?
+4. What is the trend for the total amount of SNAP assistance being given over time?
+
+These questions can be answered through performing analysis on our dataset, which is described below. For example, we can answer question 1 by counting how many times a particular month was the highest receiver of SNAP benefits within each year. In order to count the months, we could need to perform filtering and grouping operations on the data.
+
+### **The Dataset**:
+**Size**: The dataset we chose has 14 columns and 13.9 thousand rows. Overall, it is a larger dataset because it has a lot of columns that are applied to thousands of rows.
+
+**Complexity**: This is a complex dataset because it contains several features that apply to a significant amount of observations. The features go in depth in several different ways. One way is that the information is sorted by districts; this sorting offers a deeper perspective that is location based. Additionally, the data goes into higher detail by specifying if the SNAP data is temporary or non-temporary. If the data is temporary then it invokes the possibility of change in the future: a sign of growth and positive change. The aforementioned data is continued to be divided into three subsections each. They have data related to households, individual persons, and the total benefits. Households give a larger summary while the person\'s data is more detailed and individual-oriented. The benefits present a conglomeration of the prior sets and shows the impact of the food assistance program. Overall, the dataset is split up by months of the year. This organization provides for a structured way to view the data. It can be analyzed to see the difference made each month.
+
+**Origins**: This dataset comes from the U.S. Government and it represents the number of people in the state of New York who are under the food assistance program. The observations are the number of people per month and distract who are in the specified columns provided. The data was collected by New York State Office of Temporary and Disability Assistance to asses the amount of food rationing that was being spent by the government. This data benefits the government because they are the ones who are spending the money on the food assistance. Therefore it would be useful to use this data to track their spending amounts. By tracking their spending, the government would be able to assess if they need to allocate more or less money in coming years, enabling them the view and predict patterns. If correctly used they can find ways to save resources on the program. The data is validated by New York City and Upstate Welfare Management Systems and it is published by the U.S. Government so it is reasonable to say this data is trustworthy. We obtained this data from the New York government data website.
+
+#### **Analysis of Dataset**
+**High-Level Summary Information**
+
+For our project we calculated 5 pertinent values. The first was the district with the highest number of households and the second was the district with the lowest number of households. We found that **_`r district_highest`_** had the highest amount of households while **_`r district_lowest`_** district has the lowest amount. These values are important because we can see the areas in an entire state that require the highest and lowest amount of support. In addition, we can compare these to the population of districts to see if there is a correlation between the two values. Then, we can create a proportion between the values to see what percent of the districts require support. This value can give a more detailed picture of what is happening. Then we extracted the year that year with the most cases and the amount of SNAP households in the year. The highest year was **_`r year_highest`_** and it had a total of **_`r value_highest`_** households. These values show what years the government had to spend more money on food assistance programs and how many households they had to support. To further expand on this data, we found the temporary households in 2013 and gathered the proportion of temporary households: **_`r prop_temp_2013`_**. This data shows how many households in the highest year were only temporary support.
+
+**Aggregated Data Table**
+```{r aggregation_table, echo = FALSE}
+kable(district_data)
 ```
 
-### Example 2: Initialize a variable and then use it
-```{r}
-# Example 1: This function was "sourced" above
-msg <- data_access_test(" Morgan!")
+For our aggregate table, we chose to look at the average number of Temporary Assistance SNAP Household and Non-Temporary Assistance SNAP Households within each district between November 2015 and June 2020. Our table is sorted alphabetically by district, and includes information on their household averages to the left of the corresponding district. Our aggregate table is stored within the district_data variable of the aggregation.R file, and it contains a total of 58 rows and 3 columns. One trend that we noticed after looking at the data is that, on average, there is a larger number of Non-Temporary Assistance SNAP Households than Temporary Assistance SNAP Households.
+
+#### **Visualizations of Data** 
+
+**Which Months require the most SNAP benefit assistance?** 
+```{r bar_plot, echo = FALSE}
+plot(bar_plot)
 ```
 
-> `r msg` Hope you have a good day!! 
+This chart showcases the amount of times a certain month within a year was allocated the most amount of SNAP assistance. Since our data set has the years range from 2002 to 2021, there are 20 years to choose the highest month. A column chart was used since we wanted an easy way to compare which months had the highest count. The column chart therefore totals up to a 20 y-axis count. This column chart is important as it can allow policy makers to see broad timings of when the SNAP program used the most amount of resources. This overview can allow them to better understand which timings for the program need the most amount of resources. This chart can also provide some insight as to why a certain time needs the most amount of SNAP assistance. For example, the winter months of Nov-Jan seem to be the months which generally use the greatest amount of SNAP assistance. This may be attributed to the increase of family mouths to feed in family gatherings for the holiday season. 
 
-## ABOUT THIS FILE: 
-
-This is an R Markdown document. Markdown is a simple formatting syntax for authoring HTML, PDF, and MS Word documents. For more details on using R Markdown see <http://rmarkdown.rstudio.com>.
-
-When you click the **Knit** button a document will be generated that includes both content as well as the output of any embedded R code chunks within the document. You can embed an R code chunk like this:
-
-```{r cars}
-summary(cars)
+**What is the trend of SNAP benefits over time?**
+```{r area_chart, echo = FALSE}
+plot(area_chart)
 ```
 
-## Including Plots
+In our Area Chart, we focused on the total amount and cost of SNAP (Supplemental Nutrition Assistance Program) benefits, in U.S Dollars, from the years 2015 to 2021 in New York City, New York, the largest city in New York and ultimately the United States. One trend the chart reveals is a steady decline in S.N.A.P Benefits in the first half of the graph. The total amount of SNAP Benefits, however, subsequently increased in the following years after 2018, significantly rising in 2020 and 2021. This dramatic rise in SNAP benefits is a result of the COVID-19 pandemic that began in the United States in the early 2020s which lead to enforced stay at home orders and lockdown in an effort to contain the virus, causing more families and individuals as a result increased as a result to rely on SNAP Benefits to be able to afford food with no reliable source of income. 
 
-You can also embed plots, for example:
 
-```{r pressure, echo=FALSE}
-plot(pressure)
+**What is the trend of SNAP-receiving households over time?**
+```{r line_chart, echo = FALSE}
+plot(line_chart)
 ```
 
-Note that the `echo = FALSE` parameter was added to the code chunk to prevent printing of the R code that generated the plot.
+In our line chart, our focus was to see the changes in SNAP assistance programs over the years. This chart reveals the variance in the number of households across time. Starting in 2002 there is a constant incline in the number of households that require food support. This increase continues until 2013, where the number reaches a time of high of 20,639,634. Then it begins to decline. It continues to decline until 2020, when the data begins to trend upward again. This upward shift can be attributed to the COVID-19 pandemic. The beauty of this graph is that it can be analyzed next to significant events that affect the country or state’s socioeconomic status, such as the pandemic. The graph shows exactly how these events changed food support. The data can then be used to predict what would happen if similar events happened in the future.
+
+### **Expected Implications**:
+Given that our Research questions are answered, we would be able to see when the highest amount of SNAP assistance is given out to families. An expected implication of answering this question can include better preparation of government resources for the SNAP program when it is at its busiest. Essentially, knowing when the program is the busiest can help governmental planners in ensuring the program is well staffed. Understanding how the count of SNAP receiving individuals, either by the New York district or as the whole state, changes over time can be an indication of the SNAP program's use over time. If it's found that SNAP program individuals are dropping throughout time, government planners may be able to downsize the program to allocate resources in a different area without compromising the effectiveness of the program. Overall, the answers to our questions can help policy makers make better informed decisions regarding the SNAP program, hopefully improving its effectiveness.
+
+### **Limitations**:
+For one, we are always limited by our particular dataset. Given that our dataset focuses on the State of New York, it will be difficult to answer broader questions relating to the SNAP program across the nation. This can be potentially addressed though applying the data to similar metropolitan areas with similar levels of SNAP receiving individuals, though in reality every state is most likely different in these variables. The dataset additionally does not provide information regarding which specific foods the SNAP program helps provide. insight on the food types bought by the individuals receiving SNAP assistance therefore will not be possible to find. This may be addressed through finding surveys which include data on the foods bought with SNAP funds, but this type of data may prove difficult to find.
+
+### **References**:
+
+>New York State Office of Temporary and Disability Assistance. (2022, January 31). Supplemental Nutrition Assistance Program (SNAP) caseloads and expenditures: Beginning 2002: State of New York. Supplemental Nutrition Assistance Program (SNAP) Caseloads and Expenditures: Beginning 2002 | State of New York. Retrieved February 5, 2022, from https://data.ny.gov/Human-Services/Supplemental-Nutrition-Assistance-Program-SNAP-Cas/dq6j-8u8z
+
+>Silva, Christianna. \'Food Insecurity in the U.S. by the Numbers.\' NPR, NPR, 27 Sept. 2020, https://www.npr.org/2020/09/27/912486921/food-insecurity-in-the-u-s-by-the-numbers.
+
+>\'The State of Food Security and Nutrition in the World 2021.\' Www.fao.org, 2021, https://www.fao.org/state-of-food-security-nutrition
+
+ >Keith-Jennings , Brynne. \'Raising SNAP Benefits Would Have Powerful Effects on Food Security, Poverty, Health.\' Center on Budget and Policy Priorities, 12 Aug. 2019, https://www.cbpp.org/blog/raising-snap-benefits-would-have-powerful-effects-on-food-security-poverty-health
+
+

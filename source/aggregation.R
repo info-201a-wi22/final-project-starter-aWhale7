@@ -5,7 +5,7 @@ library(readr)
 library(dplyr)
 
 # Reads the csv file into the snap_data variable for later manipulation
-snap_data <- read_csv("data/SNAP_data.csv")
+snap_data <- read.csv("https://raw.githubusercontent.com/info-201a-wi22/final-project-starter-aWhale7/main/data/SNAP_data.csv", stringsAsFactors = FALSE)
 
 # Creates a data frame that only contains the average Temporary Assistance
 # SNAP Households inside of it, paired with their corresponding districts
@@ -29,11 +29,11 @@ district_data <- cbind(tash_data, ntash_data[,2])
 district_data <- district_data %>%
                  rename(
                    District = District,
-                   `Temporary Assistance SNAP Households Average` = `Temporary Assistance SNAP Households`,
-                   `Non-Temporary Assistance SNAP Households Average` = `Non-Temporary Assistance SNAP Households`)
+                   `Temporary Assistance SNAP Households Average` = Temporary.Assistance.SNAP.Households,
+                   `Non-Temporary Assistance SNAP Households Average` = Non.Temporary.Assistance.SNAP.Households)
 
 # Rounds the averages to the nearest whole number for the purpose of readability
 district_data[,2] <- round(district_data[,2])
 district_data[,3] <- round(district_data[,3])
 
-View(district_data)
+# View(district_data)

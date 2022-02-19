@@ -8,11 +8,13 @@ total_per_year <- nyc_data %>%
 
 names(total_per_year) [2] <- "households"
 
-ggplot(data = total_per_year, aes(x = Year, y = households, group = 1)) +
+line_chart <- ggplot(data = total_per_year, aes(x = Year, y = households, group = 1)) +
   geom_line(
     color = "purple"
   )+
   geom_point()+
   labs(
     title = "Total SNAP Households Per Year",
+    y = "Number of households",
+    x = "Year"
   )

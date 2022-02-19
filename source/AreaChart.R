@@ -19,7 +19,7 @@ New_York_benefits <- snap_benefits %>%
   select(Year, Month, Total.SNAP.Benefits, District)
   # selects the Year, Month, and Total Snap Benefit to be included in the `most_benefits` data frame
 
-New_York_benefits %>%
+area_chart <- New_York_benefits %>%
   # area chart
   ggplot(aes(x = Year, y = Total.SNAP.Benefits, fill = Month))+
   # x-axis is the Year, y is the highest Total Snap Benefits in each month and each year, with color filled month
