@@ -24,7 +24,7 @@ ntash_data <- snap_data %>%
 # Combines the previous two data frames into a single data frame
 district_data <- cbind(tash_data, ntash_data[,2])
 
-# Renames the colums of the newly combined data frame so that they make more
+# Renames the columns of the newly combined data frame so that they make more
 # sense in regard to the purpose of the data frame
 district_data <- district_data %>%
                  rename(
