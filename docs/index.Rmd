@@ -7,7 +7,7 @@ output: html_document
 ## **Project Report**
 ### Authors:
 | Name | Email
-| -----|------
+| :-----:|:------:
 | Paul Kim | pkim3@uw.edu
 | Mason Howes | mhowes@uw.edu
 | Viru Repalle | virurep@uw.edu
