@@ -98,10 +98,19 @@ pkim_chart <- tabPanel(
       year_input
     ),
     mainPanel(
-      plotlyOutput("line_plot")
+      plotlyOutput("line_plot"),
+      p("This chart aims to understand how the amount of SNAP benefits per individual has changed over time wihtin NY. This was calculated by adding the total
+        amount of non-temporary SNAP benefits given and the total amount of non-temporary SNAP individuals per year, and then dividing these two totals
+        to find the amount of SNAP benefits given to each person per year. This chart has been divided into 3 different time slots, with the 4th time
+        showcasing all the years in the dataset. These slots were chosen to represent a specific set of time to see how the amount of benefits
+        per person had changed. For example, the 2002-2009 slot was specifically chosen to see the change in SNAP benefits during the recession 
+        of 2008.")
     )
   )
 )
+
+
+# I believe you'll only need code from above this part.
 
 
 # Load ui
