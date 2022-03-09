@@ -1,8 +1,8 @@
 
 library(shiny)
 library(shinyWidgets)
-source("/Users/virurepalle/Code/GroupProject/final-project-starter-aWhale7/source/p_kim_graph.R")
-source("/Users/virurepalle/Code/GroupProject/final-project-starter-aWhale7/source/mhowes_piechart.R")
+source("/Users/virurepalle/Code/GroupProject/final-project-starter-aWhale7/docs/Project_3/p_kim_graph.R")
+source("/Users/virurepalle/Code/GroupProject/final-project-starter-aWhale7/docs/Project_3/mhowes_piechart.R")
 snap_benefits <- read.csv('https://raw.githubusercontent.com/info-201a-wi22/final-project-starter-aWhale7/main/data/SNAP_data.csv',
                           stringsAsFactors = FALSE)
 shinyUI(fluidPage( theme = "bootstrap.css",
