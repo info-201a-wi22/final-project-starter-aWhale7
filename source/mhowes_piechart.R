@@ -76,8 +76,7 @@ snap_pie <- plot_ly(snap_selection,
 
 # defining page
 mhowes_chart <- tabPanel(
-  "Title here",
-  titlePanel("Another title"),
+  titlePanel("Temporary Vs. Non-Temporary SNAP households per year"),
   
   sidebarLayout(
     sidebarPanel(
@@ -87,7 +86,6 @@ mhowes_chart <- tabPanel(
     
     mainPanel(
       plotlyOutput("mh_graph"),
-      p("Hello")
     )
   )
 )
