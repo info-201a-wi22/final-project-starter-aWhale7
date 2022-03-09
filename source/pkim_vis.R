@@ -6,11 +6,11 @@ library(shiny)
 # Will create the Shiny app via the one .R file method
 
 # Load data
-snap_data <- read.csv("https://raw.githubusercontent.com/info-201a-wi22/final-project-starter-aWhale7/main/data/SNAP_data.csv",
+snap_data_pk <- read.csv("https://raw.githubusercontent.com/info-201a-wi22/final-project-starter-aWhale7/main/data/SNAP_data.csv",
                       stringsAsFactors = FALSE)
 
 # Clean data to be useful in the chart to create 
-vis_data <- snap_data %>%
+vis_data <- snap_data_pk %>%
   group_by(Year) %>%
   summarise(
     total_nontemp_persons = sum(Non.Temporary.Assistance.SNAP.Persons, na.rm = TRUE),
@@ -111,6 +111,19 @@ pkim_chart <- tabPanel(
 
 
 # I believe you'll only need code from above this part.
+
+#Summary portion
+# The visualization which showcased the change of SNAP benefits given per person can help us see how the NY SNAP program has fared over time. An 
+# important assumption in measuring this statistic is that as a smaller amount of SNAP benefits given per person, the less the receiving individuals
+# actually need to rely on the SNAP program, and vice versa. Therefore, it is also assumed that the SNAP program will be beneficial for recipients when 
+# more amounts are given in times of need or crisis, and less is given out in times characterized by good economic trends.
+
+# Given these assumptions, the SNAP program seems to have worked well in its purpose. SNAP benefits have been seen to rise in harder times and fall
+# in times identified by good economic standings. The amount given per person jumped up in 2009, which can be better understood in the context of the 
+# 2008 financial recession. With many losing their jobs in this time, it makes sense that more SNAP benefits are given per person. The amount slowly 
+# decreased in the period of 2010 - 2015, which can be best described as a time where the US economy recovered well from the recession. The SNAP amount
+# however did jump up in the 2020 time frame, as the introduction of COVID-19 caused many disruptions to everyday life all across America. Overall, 
+# the SNAP program can be shown to follow the trends of big-time events which reflect the overall economic health of the US.
 
 
 # Load ui

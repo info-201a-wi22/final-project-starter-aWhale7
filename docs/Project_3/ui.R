@@ -228,7 +228,13 @@ This can be categorized by NY as a whole or by individual districts as well.", b
    titlePanel("Interactive Line Chart"),
    
    mainPanel(
-     pkim_chart
+     pkim_chart,
+     p("This chart aims to understand how the amount of SNAP benefits per individual has changed over time wihtin NY. This was calculated by adding the total
+        amount of non-temporary SNAP benefits given and the total amount of non-temporary SNAP individuals per year, and then dividing these two totals
+        to find the amount of SNAP benefits given to each person per year. This chart has been divided into 3 different time slots, with the 4th time
+        showcasing all the years in the dataset. These slots were chosen to represent a specific set of time to see how the amount of benefits
+        per person had changed. For example, the 2002-2009 slot was specifically chosen to see the change in SNAP benefits during the recession 
+        of 2008.")
    )
    ),
    
@@ -236,7 +242,12 @@ This can be categorized by NY as a whole or by individual districts as well.", b
      "Interactive Pie Chart",
      titlePanel("Interactive Pie Chart"),
      mainPanel(
-       mhowes_chart
+       mhowes_chart,
+       p("This pie chart aims to view the comparison between the amount of permanent and temporary SNAP
+         receiving households. The pie graph will automatically update according to the year and distrcit
+         chosen to showcase the comparisons between permanent (non-temporary) and temporary SNAP receiving
+         households. We chose to filter these by Year and District to see how the comparisons between these
+         two variables differed by specific districts and Years.")
      )
    ),
  
@@ -260,7 +271,12 @@ This can be categorized by NY as a whole or by individual districts as well.", b
          selected = "2002"),
      ),
        mainPanel(
-         plotlyOutput("bar_graph")
+         plotlyOutput("bar_graph"),
+         p("This bar graph aims to showcase the total SNAP benefits handed out to counties by Year.
+           The graph first showcases all years of our dataset, and the user can choose specific years
+           to showcase by using the dropdown. The all years after the chosen year will then be selected.
+           This design choice was made to allow the user to easily get a range of years to view the 
+           total amount of SNAP benefits per district if they wish.")
    )
    ),
    
