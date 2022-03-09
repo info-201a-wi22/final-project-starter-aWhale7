@@ -6,10 +6,8 @@
 #
 #    http://shiny.rstudio.com/
 #
-snap_benefits <- read.csv('https://raw.githubusercontent.com/info-201a-wi22/final-project-starter-aWhale7/main/data/SNAP_data.csv',
-                          stringsAsFactors = FALSE)
 library(shiny)
-source("/Users/virurepalle/Code/GroupProject/final-project-starter-aWhale7/docs/Project_3/p_kim_graph.R")
+
 # Define server logic required to draw a histogram
 shinyServer(function(input, output) {
 

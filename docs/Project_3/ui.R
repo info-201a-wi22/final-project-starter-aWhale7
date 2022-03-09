@@ -1,10 +1,191 @@
-
+library(dplyr)
 library(shiny)
 library(shinyWidgets)
-source("/Users/virurepalle/Code/GroupProject/final-project-starter-aWhale7/docs/Project_3/p_kim_graph.R")
-source("/Users/virurepalle/Code/GroupProject/final-project-starter-aWhale7/docs/Project_3/mhowes_piechart.R")
+library(plotly)
+snap_data <- read.csv("https://raw.githubusercontent.com/info-201a-wi22/final-project-starter-aWhale7/main/data/SNAP_data.csv",
+                      stringsAsFactors = FALSE)
 snap_benefits <- read.csv('https://raw.githubusercontent.com/info-201a-wi22/final-project-starter-aWhale7/main/data/SNAP_data.csv',
                           stringsAsFactors = FALSE)
+
+# Clean data to be useful in the chart to create 
+vis_data <- snap_data %>%
+  group_by(Year) %>%
+  summarise(
+    total_nontemp_persons = sum(Non.Temporary.Assistance.SNAP.Persons, na.rm = TRUE),
+    total_nontemp_benefits = sum(Non.Temporary.Assistance.SNAP.Benefits, na.rm = TRUE)
+  ) %>%
+  select(Year, total_nontemp_persons, total_nontemp_benefits) %>%
+  mutate(total_benefit_per_person = total_nontemp_benefits / total_nontemp_persons) %>%
+  arrange(Year)
+
+# doing a test on the visualization data (Ignore this part)
+# test <- vis_data %>%
+#   filter(Year == "c(2002:2007)")
+# 
+# test2 <- vis_data[, vis_data$Year == c(2002:2009)]
+# 
+# names <- colnames(test)
+# 
+# testplot <- plot_ly(
+#   data = test,
+#   x = ~Year,
+#   y = ~total_benefit_per_person,
+#   type = "scatter",
+#   mode = "lines"
+# )
+
+# Create an input dropdown for the user to choose between 4 different ranges of years 
+year_input <- selectInput(
+  inputId = "range_select",
+  label = "Please select a range of years",
+  choices = list(
+    "2002 - 2009" = "chunk_1",
+    "2009 - 2016" = "chunk_2",
+    "2016 - 2021" = "chunk_3",
+    "2002 - 2021" = "all_years"
+  )
+)
+
+
+# Defining function to use in creating the plot
+build_linechart <- function(data, range_choice = "") {
+  
+  # Breaking up the data set into year chunks to display 
+  # Filter data to only show inputted values
+  if (range_choice == "chunk_1") {
+    plot_data = data %>%
+      filter(Year <= 2009)
+    
+  } else if (range_choice == "chunk_2") {
+    plot_data = data %>%
+      filter(Year >= 2009 & Year <= 2016 )
+    
+  } else if (range_choice == "chunk_3") {
+    plot_data = data %>%
+      filter(Year >= 2016 & Year <= 2021)
+    
+  } else {
+    plot_data = data %>%
+      filter(Year == c(2002:2021)) 
+  }
+  
+  # Build Linechart
+  line_plot <- plot_ly(
+    data = plot_data,
+    x = ~Year,
+    y = ~total_benefit_per_person,
+    type = 'scatter',
+    mode = "lines") %>%
+    
+    layout(title = 'Trend of non-temporary SNAP 
+benefits per person in NY over time',
+           xaxis = list(title = 'Year'),
+           yaxis = list(title = 'Amount of SNAP dollars per 
+non-temporary resident')
+    )
+  
+}
+
+# defining page for the visualization
+pkim_chart <- tabPanel(
+  "Trend of Benefits Given",
+  titlePanel("How has the amount of SNAP benefits per person changed over time?"),
+  
+  sidebarLayout(
+    sidebarPanel(
+      year_input
+    ),
+    mainPanel(
+      plotlyOutput("line_plot"),
+    )
+  )
+)
+snap_var <- read.csv("https://raw.githubusercontent.com/info-201a-wi22/final-project-starter-aWhale7/main/data/SNAP_data.csv",
+                     stringsAsFactors = FALSE)
+
+# extracts all years from the data
+years <- unique(snap_var$Year)
+
+# extract all distrcits from the data 
+districts <- unique(snap_var$District)
+
+
+# Create input dropping for a list of years to choose from 
+snap_years <- selectInput(
+  inputId = "chart_years",
+  label = "Please select a year.",
+  choices = years,
+  selected = "2002"
+)
+
+# Create input dropping for a list of years to choose from 
+snap_districts <- selectInput(
+  inputId = "chart_districts",
+  label = "Please select a district.",
+  choices = districts,
+  selected = "Albany"
+)
+
+
+# Filters down the data set to only have the mean number of Temp and Non Temp 
+# assistance SNAP households within an inputted district within an inputted year
+build_piegraph <- function(data, year_choice, district_choice) {
+  
+  snap_selection <- data %>%
+    select(1, 5, 9, 12) %>%
+    group_by(Year, District) %>%
+    filter(Year == year_choice) %>% # CHANGE TO YEAR INPUT
+    filter(District == district_choice) %>% # CHANGE TO DISTRICT INPUT
+    mutate(tempMean = mean(Temporary.Assistance.SNAP.Households)) %>%
+    mutate(nonTempMean = mean(Non.Temporary.Assistance.SNAP.Households)) %>%
+    select(1, 2, 5, 6)
+  
+  
+  
+  # Pulls the Temp Mean and stores in a variable
+  pulled_temp <- snap_selection[1,3] %>%
+    pull(tempMean) %>%
+    round()
+  
+  # Pulls the Non Temp Mean and stores in a variable
+  pulled_nontemp <- snap_selection[1,4] %>%
+    pull(nonTempMean) %>%
+    round()
+  
+  # Creates the labels and the values for the pie chart
+  label <- c("Temporary Assistance SNAP Households",
+             "Non Temporary Assistance SNAP Households")
+  value <- c(pulled_temp, pulled_nontemp)
+  
+  # Creates the pie chart
+  snap_pie <- plot_ly(snap_selection,
+                      labels = label,
+                      values = value,
+                      type = "pie",
+                      textinfo ="label+percent"
+  )
+}
+
+
+
+# defining page
+mhowes_chart <- tabPanel(
+  titlePanel("Temporary Vs. Non-Temporary SNAP households per year"),
+  
+  sidebarLayout(
+    sidebarPanel(
+      snap_years,
+      snap_districts
+    ),
+    
+    mainPanel(
+      plotlyOutput("mh_graph"),
+    )
+  )
+)
+
+
+#shinyUI
 shinyUI(fluidPage( theme = "bootstrap.css",
                    setBackgroundColor(
                      color = c("#EBDEF0 ")
